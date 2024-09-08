@@ -3,6 +3,7 @@ from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
+
 class Patient(models.Model):
     first_name = models.CharField(max_length=100, verbose_name='Имя')
     surname = models.CharField(max_length=100, verbose_name='Отчество', **NULLABLE)
@@ -21,6 +22,25 @@ class Patient(models.Model):
         verbose_name = 'пациент'
         verbose_name_plural = 'пациенты'
         ordering = ['last_name']
+
+
+class Doctor(models.Model):
+    name = models.CharField(max_length=100, verbose_name='ФИО врача')
+    age = models.PositiveIntegerField(verbose_name='Возраст', **NULLABLE)
+    specialization = models.CharField(max_length=255, verbose_name='Специализация')
+    qualification = models.CharField(max_length=255, verbose_name='Квалификация')
+    experience = models.PositiveIntegerField(verbose_name='Стаж')
+    education = models.TextField(verbose_name='Образование', **NULLABLE)
+    avatar = models.ImageField(upload_to='doctor/', **NULLABLE)
+    comment = models.TextField(verbose_name='Дополинительная информация', **NULLABLE)
+    def __str__(self):
+        return f'{self.name} {self.specialization}'
+
+    class Meta:
+        verbose_name = 'врач'
+        verbose_name_plural = 'врачи'
+        ordering = ['name', 'specialization']
+
 
 
 class Appoint(models.Model):
@@ -65,24 +85,4 @@ class Result(models.Model):
     def __str__(self):
         return (f'Пациент {self.patient.last_name}, Исследование: {self.medical_test}, '
                 f'Результат: {self.test_result}, Референсное значение: {self.reference_values}')
-
-
-
-class Doctor(models.Model):
-    name = models.CharField(max_length=100, verbose_name='ФИО врача')
-    age = models.PositiveIntegerField(verbose_name='Возраст', **NULLABLE)
-    specialization = models.CharField(max_length=255, verbose_name='Специализация')
-    qualification = models.CharField(max_length=255, verbose_name='Квалификация')
-    experience = models.PositiveIntegerField(verbose_name='Стаж')
-    education = models.TextField(verbose_name='Образование', **NULLABLE)
-    avatar = models.ImageField(upload_to='doctor/', **NULLABLE)
-    comment = models.TextField(verbose_name='Дополинительная информация', **NULLABLE)
-    def __str__(self):
-        return f'{self.name} {self.specialization}'
-
-    class Meta:
-        verbose_name = 'врач'
-        verbose_name_plural = 'врачи'
-        ordering = ['name', 'specialization']
-
 

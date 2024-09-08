@@ -1,8 +1,8 @@
 {% extends 'services/base.html' %}
 {% block content %}
 <main>
-    <a class="btn btn-secondary my-2" href="{% url 'health:record_list' %}" >Просмотр записи на прием</a>
-    <a href="{% url 'health:diagnostics_list' %}" class="btn btn-secondary my-2">Результаты диагностики</a>
+    <a class="btn btn-secondary my-2" href="{% url 'main:appoint_list' %}" >Просмотр записи на прием</a>
+    <a href="{% url 'main:result_list' %}" class="btn btn-secondary my-2">Результаты диагностики</a>
     <form method="post" action="" class="form-floating">
         {% csrf_token %}
         <div class="px-4 pt-5 my-5 text-center border-bottom">

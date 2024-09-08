@@ -15,12 +15,12 @@
         <li class="nav-item">
             <nav class="nav flex-column">
                 <a class="nav-link active" aria-current="page" href="{% url 'services:service_list' %}">* Главная</a>
-                <a class="nav-link" aria-current="page" href="{% url 'doctor:our_doctors' %}">* О компании</a>
-                <a class="nav-link" aria-current="page" href="{% url 'doctor:doctor_list' %}">* Наши врачи</a>
+                <a class="nav-link" aria-current="page" href="{% url 'main:our_doctors' %}">* О компании</a>
+                <a class="nav-link" aria-current="page" href="{% url 'main:doctor_list' %}">* Наши врачи</a>
                 <a class="nav-link" aria-current="page" href="{% url 'services:service_main' %}">* Наши услуги</a>
                 <a class="nav-link " aria-current="page" href="{% url 'users:login' %}">* Личный кабинет</a>
-                <a class="nav-link " aria-current="page" href="{% url 'health:record_list' %}">* Запись на прием</a>
-                <a class="nav-link " aria-current="page" href="{% url 'health:diagnostics_list' %}">* Диагностика</a>
+                <a class="nav-link " aria-current="page" href="{% url 'main:appoint_list' %}">* Запись на прием</a>
+                <a class="nav-link " aria-current="page" href="{% url 'main:result_list' %}">* Диагностика</a>
                 <a class="nav-link " aria-current="page" href="#">* Отзывы</a>
                 <a class="nav-link " aria-current="page" href="{% url 'services:contact_list' %}">* Контакты</a>
                 <a class="nav-link " aria-current="page" href="{% url 'services:site_map_list' %}">* Карта сайта</a>

@@ -127,10 +127,10 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'services:service_list' %}">Главная</a>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'doctor:our_doctors' %}">О компании</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'main:our_doctors' %}">О компании</a>
                 <a class="p-2 btn btn-outline-primary" href="{% url 'services:service_main' %}">Наши
                     услуги</a>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'doctor:doctor_list' %}">Наши врачи</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'main:doctor_list' %}">Наши врачи</a>
                 <a class="p-2 btn btn-outline-primary" href="{% url 'services:contact_list' %}">Контакты</a>
                 <a class="p-2 btn btn-outline-primary" href="{% url 'services:feedback_list' %}">Обратная
                     связь</a>
@@ -146,9 +146,9 @@
         <div class="row">
             <div class="col-sm-8 col-md-7 py-4">
 
-                <a href="{% url 'health:record_list' %}" class="p-2 btn btn-outline-primary">Просмотр записи на
+                <a href="{% url 'main:appoint_list' %}" class="p-2 btn btn-outline-primary">Просмотр записи на
                     прием</a>
-                <a href="{% url 'health:diagnostics_list' %}" class="p-2 btn btn-outline-primary">Результаты
+                <a href="{% url 'main:result_list' %}" class="p-2 btn btn-outline-primary">Результаты
                     диагностики</a>
             </div>
         </div>
@@ -158,7 +158,7 @@
         {% if user.is_superuser %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <a type="button" class="btn btn-sm btn-block btn-outline-primary"
-               href="{% url 'doctor:doctor_form' %}">
+               href="{% url 'main:doctor_form' %}">
                 Добавить запись</a>
         </div>
         {% endif %}
@@ -175,26 +175,22 @@
                     <div class="card-body">
                         <p class="card-text">
                         <h1 class="display-11 fw-bold text-body-emphasis">{{ object.name }}</h1></p>
-                        <p class="card-text">
-                        <h1 class="display-11 fw-bold text-body-emphasis"> {{ object.patronymic }}</h1></p>
-                        <p class="card-text">
-                        <h1 class="display-11 fw-bold text-body-emphasis">{{ object.surname }}</h1></p>
                         <p class="card-text"> {{ object.specialization}}</p>
                         <p class="card-text"> {{ object.qualification }}</p>
-                        <p class="card-text"> Стаж работы- {{ object.experience }} лет</p>
+                        <p class="card-text"> Стаж - {{ object.experience }} лет</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-outline-primary"
-                                           href="{% url 'doctor:doctor_detail' object.pk %}">Подробнее</a>
+                                           href="{% url 'main:doctor_detail' object.pk %}">Подробнее</a>
                                         {% if perms.doctor.change_doctor %}
                                         <a class="btn btn-sm btn-outline-primary"
-                                           href="{% url 'doctor:doctor_update' object.pk %}">Изменить</a>
+                                           href="{% url 'main:doctor_update' object.pk %}">Изменить</a>
                                         {% endif %}
                                         {% if perms.doctor.delete_doctor %}
                                         <a class="btn btn-sm btn-outline-primary"
-                                           href="{% url 'doctor:doctor_confirm_delete' object.pk %}">Удалить</a>
+                                           href="{% url 'main:doctor_confirm_delete' object.pk %}">Удалить</a>
                                         {% endif %}
                                     </div>
                                 </div>

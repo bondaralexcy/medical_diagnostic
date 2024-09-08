@@ -14,7 +14,7 @@ class PatientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-    success_url = reverse_lazy('main/patient_list')
+    success_url = reverse_lazy('main:patient_list')
 
     def get_queryset(self):
         return Patient.objects.all()
@@ -23,7 +23,7 @@ class PatientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class PatientDetailView(LoginRequiredMixin, DetailView):
     model = Patient
     template_name = 'main/patient_detail.html'
-    success_url = reverse_lazy('main:patient_list.html')
+    success_url = reverse_lazy('main:patient_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,7 +39,7 @@ class PatientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     model = Patient
     fields = '__all__'
     template_name = 'main/patient_form.html'
-    success_url = reverse_lazy('main:patient_list.html')
+    success_url = reverse_lazy('main:patient_list')
     permission_required = 'main.add_patient'
 
     def get_context_data(self, **kwargs):
@@ -62,7 +62,7 @@ class PatientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     model = Patient,
     fields = '__all__'
     template_name = 'main/patient_form.html'
-    success_url = reverse_lazy('main:patient_list.html')
+    success_url = reverse_lazy('main:patient_list')
     permission_required = 'main.change_patient'
 
     def get_context_data(self, **kwargs):
@@ -78,12 +78,12 @@ class PatientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 class PatientDeleteView(LoginRequiredMixin, DeleteView):
     model = Patient
     template_name = 'main/patient_confirm_delete.html'
-    success_url = reverse_lazy('main:patient_list.html')
+    success_url = reverse_lazy('main:patient_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         patient_item = self.get_object()
-        context['title'] = patient_item.name
+        context['title'] = patient_item.last_name
         return context
 
 
@@ -179,25 +179,25 @@ class ResultListView(ListView):
 class DoctorListView(ListView):
     model = Doctor
     fields = ['name', 'specialization', 'qualification']
-    template_name = 'doctor/doctor_list.html'
+    template_name = 'main/doctor_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-    success_url = reverse_lazy('doctor: doctor_list')
+    success_url = reverse_lazy('main:doctor_list')
 
-    def get_template_names(self):
-        if self.request.path == '/doctor/':
-            return ['doctor/our_doctors.html']
-        elif self.request.path == '/':
-            return ['doctor/doctor_list.html']
+    # def get_template_names(self):
+    #     if self.request.path == '/doctor/':
+    #         return ['main/our_doctors.html']
+    #     elif self.request.path == '/':
+    #         return ['main/doctor_list.html']
 
 
 class DoctorCreateView(CreateView):
     model = Doctor
     fields = ['name', 'specialization', 'qualification']
-    template_name = 'doctor/doctor_form.html'
-    success_url = reverse_lazy('doctor:doctor_list')
+    template_name = 'main/doctor_form.html'
+    success_url = reverse_lazy('main:doctor_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -213,14 +213,14 @@ class DoctorCreateView(CreateView):
 
 class DoctorDetailView(DetailView):
     model = Doctor
-    template_name = 'doctor/doctor_detail.html'
+    template_name = 'main/doctor_detail.html'
 
 
 class DoctorUpdateView(UpdateView):
     model = Doctor
     fields = ['name', 'specialization', 'qualification']
-    template_name = 'doctor/doctor_form.html'
-    success_url = reverse_lazy('doctor:doctor_list')
+    template_name = 'main/doctor_form.html'
+    success_url = reverse_lazy('main:doctor_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -229,11 +229,11 @@ class DoctorUpdateView(UpdateView):
 
 class DoctorDeleteView(DeleteView):
     model = Doctor
-    template_name = 'doctor/doctor_confirm_delete.html'
-    success_url = reverse_lazy('doctor:doctor_list')
+    template_name = 'main/doctor_confirm_delete.html'
+    success_url = reverse_lazy('main:doctor_list')
 
 
 class OurDoctorView(ListView):
     model = Doctor
-    template_name = 'doctor/our_doctor.html'
+    template_name = 'main/our_doctor.html'
 

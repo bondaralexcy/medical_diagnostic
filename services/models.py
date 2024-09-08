@@ -1,7 +1,5 @@
 from django.db import models
 
-from doctor.models import Doctor
-
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -11,12 +9,12 @@ class Service(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Цена')
 
     def __str__(self):
-        return self.name
+        return self.service_name
 
     class Meta:
         verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
-        ordering = ['name']
+        ordering = ['service_name']
         permissions = [
             ('can_add_service', 'Может добавлять услугу'),
             ('can_change_service', 'Может изменять услугу'),

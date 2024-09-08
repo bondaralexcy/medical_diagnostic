@@ -5,4 +5,4 @@ from services.models import Service
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'name', 'description', 'price']
+    list_display = ['pk', 'service_name', 'description', 'price']
