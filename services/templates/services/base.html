@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/album.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header style="background-image: url(/media/healthcare-background-svbgqjgz7j1fx9p1.jpg)">
+    <div class="collapse" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-primary">О нас</h4>
+                    <p class="text-white">Медецинский центр "ЗДОРОВЬЕ"– это мощный
+                        многопрофильный лечебно-диагностический комплекс. На протяжении 30 лет центр остается ведущим
+                        учреждением оказания высококвалифицированной медицинской помощи. Высокая
+                        компетентность и профессионализм наших специалистов, подкрепленные обновленной
+                        материально-технической базой центра, позволяют с высокой точностью проводить обследования и
+                        осуществлять диагностику заболеваний в любых самых сложных случаях. В штате диагностического
+                        центра кандидаты медицинских наук, врачи высшей категории, имеющие серьезный опыт работы и
+                        владеющие современными методиками диагностики и лечения.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-primary">Это Вам понадобится</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'services:contact_list' %}" class="text-white">Контакты</a></li>
+                        <li><a href="{% url 'services:site_map_list' %}" class="text-white">Карта сайта</a></li>
+                        <li><a href="{% url 'services:feedback_list' %}" class="text-white">Обратная связь</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'services/includes/inc_main.html' %}
+</header>
+
+<main role="main">
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Вернуться к началу</a>
+        </p>
+        <p> &copy; 2024 - {% now 'Y' %} Компания медицинской диагностики , 2024</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/holder.min.js' %}"></script>
+</body>
+</html>
