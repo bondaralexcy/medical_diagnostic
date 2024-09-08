@@ -1,176 +1,239 @@
-# from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-# from django.urls import reverse_lazy
-# from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-#
-# from main.models import Client, Record, Diagnostics
-#
-#
-# class ClientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-#     model = Client
-#     fields = ['name', 'surname', 'phone', 'address', 'email', 'birth_date', 'created_at']
-#     template_name = 'health/client_list.html'
-#     permission_required = 'health.view_client'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         return context
-#     success_url = reverse_lazy('health/client_list')
-#
-#     def get_queryset(self):
-#         return Client.objects.all()
-#
-#
-# class ClientDetailView(LoginRequiredMixin, DetailView):
-#     model = Client
-#     template_name = 'health/client_detail.html'
-#     success_url = reverse_lazy('health:client_list.html')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         client_item = self.get_object()
-#         context['title'] = client_item.name
-#         return context
-#
-#     def get_queryset(self):
-#         return Client.objects.filter(id=self.kwargs['pk'])
-#
-#
-# class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-#     model = Client
-#     fields = '__all__'
-#     template_name = 'health/client_form.html'
-#     success_url = reverse_lazy('health:client_list.html')
-#     permission_required = 'health.add_client'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Создание клиента'
-#         return context
-#
-#     def form_valid(self, form):
-#         client = form.save()
-#         user = self.request.user
-#         client.owner = user
-#         client.save()
-#         return super().form_valid(form)
-#
-#     def get_queryset(self):
-#         return Client.objects.all()
-#
-#
-# class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-#     model = Client,
-#     fields = '__all__'
-#     template_name = 'health/client_form.html'
-#     success_url = reverse_lazy('health:client_list.html')
-#     permission_required = 'health.change_client'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         client_item = self.get_object()
-#         context['title'] = client_item.name
-#         return context
-#
-#     def get_queryset(self):
-#         return Client.objects.filter(id=self.kwargs['pk'])
-#
-#
-# class ClientDeleteView(LoginRequiredMixin, DeleteView):
-#     model = Client
-#     template_name = 'health/client_confirm_delete.html'
-#     success_url = reverse_lazy('health:client_list.html')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         client_item = self.get_object()
-#         context['title'] = client_item.name
-#         return context
-#
-#
-# class RecordListView(ListView):
-#     model = Record
-#     fields = '__all__'
-#     template_name = 'health/record_list.html'
-#     success_url = reverse_lazy('health:record_list')
-#     permission_required = 'health.view_record'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = f'Записи клиента'
-#         return context
-#
-#     def get_queryset(self, *args, **kwargs):
-#         queryset = super().get_queryset(*args, **kwargs)
-#         queryset = queryset.filter(publication=True)
-#         return queryset
-#
-#
-# class RecordCreateView(CreateView):
-#     model = Record
-#     fields = '__all__'
-#     template_name = 'health/record_form.html'
-#     success_url = reverse_lazy('health:record_list')
-#     permission_required = 'health.add_record'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = f'Создание записи для клиента'
-#         return context
-#
-#     def get_queryset(self):
-#         return Record.objects.all()
-#
-#
-# class RecordDetailView(DetailView):
-#     model = Record
-#     template_name = 'health/record_detail.html'
-#     success_url = reverse_lazy('health:record_list')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         record_item = self.get_object()
-#         context['title'] = f'Запись клиента {record_item.client.name} {record_item.client.surname}'
-#         return context
-#
-#     def get_queryset(self):
-#         return Record.objects.filter(id=self.kwargs['pk'])
-#
-#
-# class RecordUpdateView(UpdateView):
-#     model = Record
-#     fields = '__all__'
-#     template_name = 'health/record_form.html'
-#     success_url = reverse_lazy('health:record_list')
-#     permission_required = 'health.change_record'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         record_item = self.get_object()
-#         context['title'] = f'Редактирование записи клиента {record_item.client.name} {record_item.client.surname}'
-#         return context
-#
-#
-# class RecordDeleteView(DeleteView):
-#     model = Record
-#     template_name = 'health/record_confirm_delete.html'
-#     success_url = reverse_lazy('health:record_list')
-#     permission_required = 'health.delete_record'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         record_item = self.get_object()
-#         context['title'] = f'Удаление записи клиента {record_item.client.name} {record_item.client.surname}'
-#         return context
-#
-#
-# class DiagnosticsListView(ListView):
-#     model = Diagnostics
-#     fields = '__all__'
-#     template_name = 'health/diagnostics_list.html'
-#     success_url = reverse_lazy('services:service_list')
-#     permission_required = 'health.view_diagnostics'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Лечебные консультации'
-#         return context
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from main.models import Patient, Appoint, Result, Doctor
+
+
+class PatientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = Patient
+    fields = ['first_name', 'last_name', 'phone', 'address', 'email', 'birth_date', 'created_at']
+    template_name = 'main/patient_list.html'
+    permission_required = 'main.view_patient'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    success_url = reverse_lazy('main/patient_list')
+
+    def get_queryset(self):
+        return Patient.objects.all()
+
+
+class PatientDetailView(LoginRequiredMixin, DetailView):
+    model = Patient
+    template_name = 'main/patient_detail.html'
+    success_url = reverse_lazy('main:patient_list.html')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient_item = self.get_object()
+        context['title'] = patient_item.name
+        return context
+
+    def get_queryset(self):
+        return Patient.objects.filter(id=self.kwargs['pk'])
+
+
+class PatientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Patient
+    fields = '__all__'
+    template_name = 'main/patient_form.html'
+    success_url = reverse_lazy('main:patient_list.html')
+    permission_required = 'main.add_patient'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Сведения о пациенте'
+        return context
+
+    def form_valid(self, form):
+        patient = form.save()
+        user = self.request.user
+        patient.owner = user
+        patient.save()
+        return super().form_valid(form)
+
+    def get_queryset(self):
+        return Patient.objects.all()
+
+
+class PatientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Patient,
+    fields = '__all__'
+    template_name = 'main/patient_form.html'
+    success_url = reverse_lazy('main:patient_list.html')
+    permission_required = 'main.change_patient'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient_item = self.get_object()
+        context['title'] = patient_item.name
+        return context
+
+    def get_queryset(self):
+        return Patient.objects.filter(id=self.kwargs['pk'])
+
+
+class PatientDeleteView(LoginRequiredMixin, DeleteView):
+    model = Patient
+    template_name = 'main/patient_confirm_delete.html'
+    success_url = reverse_lazy('main:patient_list.html')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient_item = self.get_object()
+        context['title'] = patient_item.name
+        return context
+
+
+class AppointListView(ListView):
+    model = Appoint
+    fields = '__all__'
+    template_name = 'main/appoint_list.html'
+    success_url = reverse_lazy('main:appoint_list')
+    permission_required = 'main.view_appoint'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Записи пациента'
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(publication=True)
+        return queryset
+
+
+class AppointCreateView(CreateView):
+    model = Appoint
+    fields = '__all__'
+    template_name = 'main/appoint_form.html'
+    success_url = reverse_lazy('main:appoint_list')
+    permission_required = 'main.add_appoint'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Новая запись для пациента'
+        return context
+
+    def get_queryset(self):
+        return Appoint.objects.all()
+
+
+class AppointDetailView(DetailView):
+    model = Appoint
+    template_name = 'main/appoint_detail.html'
+    success_url = reverse_lazy('main:appoint_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        appoint_item = self.get_object()
+        context['title'] = f'Запись пациента {appoint_item.patient.last_name} {appoint_item.patient.first_name}'
+        return context
+
+    def get_queryset(self):
+        return Appoint.objects.filter(id=self.kwargs['pk'])
+
+
+class AppointUpdateView(UpdateView):
+    model = Appoint
+    fields = '__all__'
+    template_name = 'main/appoint_form.html'
+    success_url = reverse_lazy('main:appoint_list')
+    permission_required = 'main.change_appoint'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        appoint_item = self.get_object()
+        context['title'] = f'Редактирование записи пациента {appoint_item.patient.last_name} {appoint_item.patient.first_name}'
+        return context
+
+
+class AppointDeleteView(DeleteView):
+    model = Appoint
+    template_name = 'main/appoint_confirm_delete.html'
+    success_url = reverse_lazy('main:appoint_list')
+    permission_required = 'main.delete_appoint'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        appoint_item = self.get_object()
+        context['title'] = f'Отмена записи пациента {appoint_item.patient.last_name} {appoint_item.patient.first_name}'
+        return context
+
+
+class ResultListView(ListView):
+    model = Result
+    fields = '__all__'
+    template_name = 'main/result_list.html'
+    success_url = reverse_lazy('services:service_list')
+    permission_required = 'main.view_result'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Диагностика'
+        return context
+
+
+class DoctorListView(ListView):
+    model = Doctor
+    fields = ['name', 'specialization', 'qualification']
+    template_name = 'doctor/doctor_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    success_url = reverse_lazy('doctor: doctor_list')
+
+    def get_template_names(self):
+        if self.request.path == '/doctor/':
+            return ['doctor/our_doctors.html']
+        elif self.request.path == '/':
+            return ['doctor/doctor_list.html']
+
+
+class DoctorCreateView(CreateView):
+    model = Doctor
+    fields = ['name', 'specialization', 'qualification']
+    template_name = 'doctor/doctor_form.html'
+    success_url = reverse_lazy('doctor:doctor_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def get_queryset(self, *args, **kwargs):
+        queryset =Doctor.objects.all(*args, **kwargs)
+        return queryset
+
+
+class DoctorDetailView(DetailView):
+    model = Doctor
+    template_name = 'doctor/doctor_detail.html'
+
+
+class DoctorUpdateView(UpdateView):
+    model = Doctor
+    fields = ['name', 'specialization', 'qualification']
+    template_name = 'doctor/doctor_form.html'
+    success_url = reverse_lazy('doctor:doctor_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class DoctorDeleteView(DeleteView):
+    model = Doctor
+    template_name = 'doctor/doctor_confirm_delete.html'
+    success_url = reverse_lazy('doctor:doctor_list')
+
+
+class OurDoctorView(ListView):
+    model = Doctor
+    template_name = 'doctor/our_doctor.html'
+
