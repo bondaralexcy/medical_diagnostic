@@ -1,4 +1,4 @@
-{% extends 'services/base.html' %}
+{% extends 'main/base.html' %}
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-8">{{ title }}</h1>
@@ -14,12 +14,10 @@
                                     <div class="card-body">
                                         <form method="post" enctype="multipart/form-data">
                                             {% csrf_token %}
-                                            <p> Хотите удалить запись? </p>
+                                            <p> Хотите удалить информацию о пациенте {{ object.last_name }}? </p>
                                             <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Подтвердить</button>
-
                                         </form>
                                         <a href="{% url 'main:patient_list' %}" class="btn btn-lg btn-block btn-outline-primary">Отмена</a>
-
                                     </div>
                                 </div>
                             </div>

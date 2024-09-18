@@ -46,7 +46,7 @@
     <form method="post" action="" class="form-floating">
         {% csrf_token %}
         {% include 'services/includes/inc_main_1.html' %}
-        <h1 class="h3 mb-5 fw-normal">Перечень предоставляемых услуг</h1>
+        <h1 class="h3 mb-5 fw-normal">Перечень услуг</h1>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for object in object_list %}
             <div class="col">

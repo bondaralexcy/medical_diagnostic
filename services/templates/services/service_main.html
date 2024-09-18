@@ -6,7 +6,7 @@
     <form method="post" action="" class="form-floating">
         {% csrf_token %}
         <div class="px-4 pt-5 my-5 text-center border-bottom">
-            <h1 class="display-5 fw-bold text-body-emphasis">Перечень предоставляемых услуг</h1>
+            <h1 class="display-5 fw-bold text-body-emphasis">Перечень пред услуг</h1>
             {% if user.is_superuser %}
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <a type="button" class="btn btn-sm btn-block btn-outline-primary"
