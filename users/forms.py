@@ -14,25 +14,16 @@ class StyleFormMixin:
                 field.widget.attrs["class"] = "form-control"
 
 
-#class StyleFormMixin:
-    #def __init__(self, *args, **kwargs):
-        #super().__init__(*args, **kwargs)
-        #for field_name, field in self.fields.items():
-            #if isinstance(field, BooleanField):
-                #field.widget.attrs['class'] = 'form-check-input'
-            #else:
-                #field.widget.attrs['class'] = 'form-control'
-
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
-    """ Регистравция нового пользователя с помощью стандартной формы UserCreationForm"""
+    """ Регистрация нового пользователя """
     class Meta:
         model = User
         fields = ('email', 'password1', 'password2')
 
 
 class UserProfileForm(StyleFormMixin, UserChangeForm):
-    """ Изменение профиля пользователя с помощью стандартной формы UserChangeForm"""
+    """ Изменение пользователя """
     class Meta:
         model = User
         fields = ('email', 'phone', 'avatar', 'city')

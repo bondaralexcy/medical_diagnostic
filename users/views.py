@@ -112,8 +112,6 @@ import string
 import secrets
 import smtplib
 
-# Create your views here.
-
 
 class UserCreateView(CreateView):
     """
