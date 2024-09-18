@@ -129,10 +129,10 @@ class PatientDeleteView(DeleteView):
     success_url = reverse_lazy('main:patient_list')
 
 
-# class Homepage(TemplateView):
-#     Model = Patient
-#     template_name = "main/base.html"
-#     extra_context = {"title": "Медицинская диагностика"}
+class Homepage(TemplateView):
+    Model = Doctor
+    template_name = "main/base.html"
+    extra_context = {"title": "Медицинская диагностика"}
 
 
 # class PatientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -376,22 +376,25 @@ class DoctorListView(ListView):
 class DoctorCreateView(CreateView):
     """
     Контроллер отвечает за внесение информации о врачах
+
+    Стандартное название шаблона:
+    <app_name>/<model_name>_form.html
     """
     model = Doctor
-    fields = ['name', 'specialization', 'qualification']
-    template_name = 'main/doctor_form.html'
+    form_class = DoctorForm
     success_url = reverse_lazy('main:doctor_list')
     permission_required = 'main.add_doctor'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
-    def form_valid(self, form):
-        return super().form_valid(form)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
 
-    def get_queryset(self, *args, **kwargs):
-        queryset =Doctor.objects.all(*args, **kwargs)
-        return queryset
+    # def form_valid(self, form):
+    #     return super().form_valid(form)
+
+    # def get_queryset(self, *args, **kwargs):
+    #     queryset =Doctor.objects.all(*args, **kwargs)
+    #     return queryset
 
 
 class DoctorDetailView(DetailView):
@@ -405,16 +408,16 @@ class DoctorDetailView(DetailView):
 
 class DoctorUpdateView(UpdateView):
     """
-    Контроллер отвечает за изменение информации о враче
+    Контроллер отвечает за изменение сведений о враче
+
+    Стандартное название шаблона:
+    <app_name>/<model_name>_form.html
     """
     model = Doctor
-    fields = ['name', 'specialization', 'qualification']
-    template_name = 'main/doctor_form.html'
+    form_class =DoctorForm
     success_url = reverse_lazy('main:doctor_list')
     permission_required = 'main.change_doctor'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+
 
 
 class DoctorDeleteView(DeleteView):

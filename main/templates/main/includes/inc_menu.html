@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
           <h4>Медицина будущего</h4>
-          <p class="text-body-secondary">Программы комплексной диагностики в МЕДИ Premium </p>
+          <p class="text-body-secondary">Программы комплексной диагностики в МЕДИ-Premium </p>
           <p class="text-body-secondary">Мы разработали комплексные программы обследования CHECK-UP на базе
             международных стандартов доказательной медицины.
             Здесь собраны только самые необходимые услуги и предусмотрено всё для комфорта пациентов:
@@ -15,8 +15,8 @@
         <div class="col-sm-4 offset-md-1 py-4">
           <h4>Навигация</h4>
           <ul class="list-unstyled">
-            <li><a href="{% url 'main:patient_list' %}" class="text-primary-emphasis">Главная</a></li>
-
+            <li><a href="{% url 'services:service_list' %}" class="text-primary-emphasis">Главная</a></li>
+            <li><a href="{% url 'main:doctor_list' %}" class="text-primary-emphasis">Наши врачи</a></li>
             <li><a href="{% url 'services:contact_list' %}" class="text-primary-emphasis">Контакты</a></li>
             <li><a href="{% url 'services:feedback_list' %}" class="text-primary-emphasis">Обратная связь</a></li>
             <li><a href="{% url 'services:site_map_list' %}" class="text-primary-emphasis">Как нас найти</a></li>
