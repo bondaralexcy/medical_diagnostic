@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% load my_tags%}
+{% block content %}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="col-6">
+            <div class="card shadow-sm">
+              <img src="{{ patient.photo | media_filter }}" class="img-fluid" width="200" height="200"
+              <div class="card-body">
+                <p class="card-text">{{object.last_name}} {{object.first_name}} {{object.surname}}</p>
+                <p class="card-text">Телефон: {{object.phone}}</p>
+                <p class="card-text">Адрес: {{object.address}}</p>
+                <p class="card-text">Почта: {{object.email}}</p>
+                <p class="card-text">День рождения: {{object.birth_date}}</p>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a class="btn btn-outline-secondary" href="{% url 'main:patient_list' %}" role="button">Вернуться</a>
+                    <a class="btn btn-outline-secondary" href="{% url 'main:patient_confirm_delete' patient.pk %}" role="button">Удалить</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

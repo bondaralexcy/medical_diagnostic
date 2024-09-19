@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load my_tags%}
+{% block content %}
+<main>
+    <form method="post" action="" class="form-floating">
+        {% csrf_token %}
+                <div class="col">
+
+                    <h1 class="h2 text-center">Персонифицированная медицина — это медицина будущего.</h1>
+                    <p class="text-black text-justify">
+                        К идее нового проекта нас привела эволюция нашей родительской компании.
+                        В 2017 году мы задумались о том, что можем выйти на рынок медицинских услуг как отделение персонифицированной медицины.
+                        За 22 года было накоплено определенное количество компетенции и доверия пациентов, и мы пришли к тому,
+                        что можем себе позволить войти в новый премиальный сегмент, следуя за современными трендами – 4П медицины.
+                    </p>
+
+                </div>
+        <h1 class="h3 mb-5 fw-normal">Перечень предоставляемых услуг</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for object in object_list %}
+                <div class="col-4">
+                    <div class="card shadow-sm">
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ object.service_name|title }}</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div class="btn-group">
+                                  <a class="btn btn-outline-secondary" href="{% url 'services:service_detail' object.pk %}" role="button">Посмотреть</a>
+                                  <a class="btn btn-outline-secondary" href="{% url 'services:service_update' object.pk %}" role="button">Изменить</a>
+                                  <a class="btn btn-outline-secondary" href="{% url 'services:service_confirm_delete' object.pk %}" role="button">Удалить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col">
+                    <p class="text-black text-justify"> </p>
+                    <div class="alert alert-primary text-center" role="alert">
+                        БОЛЕЗНЬ ПРОЩЕ ПРЕДОТВРАТИТЬ, ЧЕМ ЛЕЧИТЬ
+                    </div>
+                        <div class="btn-group-vertical">
+                        <a href="{% url 'services:contact_list' %}" class="text-black">Контакты</a>
+                        <a href="{% url 'services:site_map_list' %}" class="text-black">Карта сайта</a>
+                        <a href="{% url 'services:feedback_list' %}" class="text-black">Обратная связь</a>
+                        </div>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}

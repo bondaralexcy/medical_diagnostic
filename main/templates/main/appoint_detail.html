@@ -1,0 +1,10 @@
+{% extends 'services/base.html' %}
+{% load my_tags_health %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-6">
+        {{ object.client }}</h1>
+    <h1 class="display-6">Записан(а) на прием ко врачу {{ object.doctor }}</h1>
+    <h1 class="display-6">на {{ object.record_date }} </h1>
+ </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'services/base.html' %}
+{% block content %}
+<main>
+    <a class="btn btn-secondary my-2" href="{% url 'main:appoint_list' %}" >Просмотр записи на прием</a>
+    <a href="{% url 'main:result_list' %}" class="btn btn-secondary my-2">Результаты диагностики</a>
+    <form method="post" action="" class="form-floating">
+        {% csrf_token %}
+        <div class="px-4 pt-5 my-5 text-center border-bottom">
+            <h1 class="display-5 fw-bold text-body-emphasis">Перечень пред услуг</h1>
+            {% if user.is_superuser %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <a type="button" class="btn btn-sm btn-block btn-outline-primary"
+                   href="{% url 'services:service_form' %}">
+                    Добавить запись</a>
+            </div>
+            {% endif %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                {% for object in object_list %}
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="20"
+                             xmlns="http://www.w3.org/2000/svg" role="" aria-label="Placeholder: Thumbnail"
+                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                            <img src="/media/{{ object.picture }}" class="img-thumbnail" alt="...">
+                            <rect width="100%" height="100%" fill="#55595c"/>
+
+                        </svg>
+                        <div class="card-body">
+                            <h1 class="display-6 fw-bold text-bdy-emphasis">{{ object.name|title }}</h1></p>
+                            <p class="card-text">{{ object.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-outline-primary"
+                                               href="{% url 'services:service_detail' object.pk %}">Подробнее</a>
+                                            {% if perms.services.change_service %}
+                                            <a class="btn btn-sm btn-outline-primary"
+                                               href="{% url 'services:service_update' object.pk %}">Изменить</a>
+                                            {% endif %}
+                                            {% if perms.services.delete_service %}
+                                            <a class="btn btn-sm btn-outline-primary"
+                                               href="{% url 'services:service_confirm_delete' object.pk %}">Удалить</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}

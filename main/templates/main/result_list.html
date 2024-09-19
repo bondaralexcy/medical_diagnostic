@@ -1,0 +1,60 @@
+{% extends 'services/base.html' %}
+{% block content %}
+<body>
+<div class="card border-warning mb-3" style="max-width: 18rem;">
+    {% for object in object_list %}
+    <div class="card-header">Данные клиента</div>
+    <div class="card-body">
+        <h5 class="card-title">{{ object.client }}</h5>
+        <p class="card-text">Дата рождения: {{ object.client.birth_date }} </p>
+        <p class="card-text">Пол: </p>
+        <p class="card-text">Возраст: </p>
+        <p class="card-text">Адрес: {{ object.client.address }} </p>
+    </div>
+    {% endfor %}
+</div>
+<div class="card border-primary mb-3" style="max-width: 18rem;">
+    {% for object in object_list %}
+    <div class="card-header">Тест</div>
+    <div class="card-body text-primary">
+        <h5 class="card-title">{{ object.test }} </h5>
+        <p class="card-text"></p>
+    </div>
+    {% endfor %}
+</div>
+<div class="card border-secondary mb-3" style="max-width: 18rem;">
+    {% for object in object_list %}
+    <div class="card-header">Ед. измерения</div>
+    <div class="card-body text-secondary">
+        <h5 class="card-title"> {{ object.units_of_measurement }} </h5>
+        <p class="card-text"></p>
+    </div>
+    {% endfor %}
+</div>
+<div class="card border-success mb-3" style="max-width: 18rem;">
+    {% for object in object_list %}
+    <div class="card-header">Должные значения</div>
+    <div class="card-body text-success">
+        <h5 class="card-title">{{ object.proper_values }}</h5>
+        <p class="card-text"></p>
+    </div>
+    {% endfor %}
+</div>
+<div class="card border-danger mb-3" style="max-width: 18rem;">
+    {% for object in object_list %}
+    <div class="card-header">Результат</div>
+    <div class="card-body text-danger">
+        <h5 class="card-title">{{ object.result }}</h5>
+        <p class="card-text"></p>
+    </div>
+    <div class="card-header">Диагноз</div>
+    <div class="card-body">
+        <h5 class="card-title">{{ object.diagnosis }}</h5>
+        <p class="card-text"></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</div>
+
+</body>

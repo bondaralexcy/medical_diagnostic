@@ -1,23 +1,33 @@
 from django.urls import path, include
+# from django.views.decorators.cache import cache_page
 
-# from main.views import ClientListView, ClientDetailView, ClientCreateView, ClientUpdateView, ClientDeleteView, \
-#     RecordListView, RecordCreateView, RecordUpdateView, RecordDeleteView, RecordDetailView, DiagnosticsListView
 from main.apps import MainConfig
+
+from main.views import PatientListView, PatientDetailView, PatientCreateView, PatientUpdateView, PatientDeleteView, \
+     AppointListView, AppointCreateView, AppointUpdateView, AppointDeleteView, AppointDetailView, ResultListView, \
+     DoctorListView, DoctorDetailView, DoctorCreateView, DoctorUpdateView, DoctorDeleteView
 
 app_name = MainConfig.name
 
 urlpatterns = [
+     path('', PatientListView.as_view(), name='patient_list'),
+     path('patient/<int:pk>/', PatientDetailView.as_view(), name='patient_detail'),
+     path('patient/create/', PatientCreateView.as_view(), name='patient_create'),
+     path('patient/<int:pk>/update/', PatientUpdateView.as_view(), name='patient_update'),
+     path('patient/<int:pk>/delete/', PatientDeleteView.as_view(), name='patient_confirm_delete'),
 
-    # path('', ClientListView.as_view(), name='client_list'),
-    # path('client/create/', ClientCreateView.as_view(), name='client_form'),
-    # path('client/<int:pk>', ClientDetailView.as_view(), name='client_detail'),
-    # path('client/<int:pk>/update/', ClientUpdateView.as_view(), name='client_update'),
-    # path('client/<int:pk>/delete/', ClientDeleteView.as_view(), name='client_delete'),
-    # path('record/', RecordListView.as_view(), name='record_list'),
-    # path('record/<int:pk>', RecordDetailView.as_view(), name='record_detail'),
-    # path('record/create/', RecordCreateView.as_view(), name='record_form'),
-    # path('record/<int:pk>/update/', RecordUpdateView.as_view(), name='record_update'),
-    # path('record/<int:pk>/delete/', RecordDeleteView.as_view(), name='record_confirm_delete'),
-    # path('diagnostics/', DiagnosticsListView.as_view(), name='diagnostics_list'),
+     path('appoint/', AppointListView.as_view(), name='appoint_list'),
+     path('appoint/<int:pk>', AppointDetailView.as_view(), name='appoint_detail'),
+     path('appoint/create/', AppointCreateView.as_view(), name='appoint_form'),
+     path('appoint/<int:pk>/update/', AppointUpdateView.as_view(), name='appoint_update'),
+     path('appoint/<int:pk>/delete/', AppointDeleteView.as_view(), name='appoint_confirm_delete'),
 
+     path('doctor/', DoctorListView.as_view(), name='doctor_list'),
+     path('doctor/<int:pk>/', DoctorDetailView.as_view(), name='doctor_detail'),
+     path('doctor/create/', DoctorCreateView.as_view(), name='doctor_create'),
+     path('doctor/<int:pk>/update/', DoctorUpdateView.as_view(), name='doctor_update'),
+     path('doctor/<int:pk>/delete/', DoctorDeleteView.as_view(), name='doctor_confirm_delete'),
+
+     path('result/', ResultListView.as_view(), name='result_list'),
 ]
+

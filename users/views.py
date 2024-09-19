@@ -1,95 +1,204 @@
-import random
-import secrets
-import string
+#import random
+#import secrets
+#import string
 
+#from django.conf import settings
+#from django.contrib.auth.mixins import LoginRequiredMixin
+#from django.contrib.auth.views import LoginView, LogoutView
+#from django.core.mail import send_mail
+#from django.shortcuts import get_object_or_404, redirect, render
+#from django.urls import reverse_lazy, reverse
+#from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView, DetailView
+
+#from config.settings import EMAIL_HOST_USER
+#from users.forms import UserRegisterFrom, UserProfileFrom
+#from users.models import User
+
+
+#class UserLogin(LoginView):
+    #template_name = 'users/login.html'
+
+
+#class UserLogout(LogoutView):
+    #pass
+
+
+#class RegisterView(CreateView):
+    #model = User
+    #form_class = UserRegisterFrom
+    #template_name = 'users/register.html'
+    #success_url = reverse_lazy('users:login')
+
+    #def form_valid(self, form):
+        #user = form.save()
+        #user.is_active = False
+        #user.set_password(user.password)
+        #verification_code = secrets.token_hex(16)
+        #user.verification_code = verification_code
+        #host = self.request.get_host()
+        #url = f'http://{host}/users/email-confirm/{verification_code}'
+        #print(url)
+        #send_mail(
+            #subject='Подтверждение почты',
+            #message=f'Привет, переди по ссылке для подтверждения почты {url}',
+            #from_email=settings.EMAIL_HOST_USER,
+            #recipient_list=[user.email],
+        #)
+        #user.save()
+        #return super().form_valid(form)
+
+
+#def email_verification(request, verification_code):
+    #user = get_object_or_404(User, verification_code=verification_code)
+    #if user:
+        #user.is_active = True
+        #user.save()
+        #return redirect(reverse("users:login"))
+    #else:
+        #return redirect(reverse('users:register'))
+
+
+#class ResetPassword(TemplateView):
+    #def get(self, request):
+        #return render(request, 'users/reset.html')
+
+    #def post(self, request):
+        #mail = request.POST.get('mail')
+        #user = get_object_or_404(User, email=mail)
+        #letters = list(string.ascii_lowercase)
+        #new_password = ''
+        #for i in range(8):
+            #new_password = new_password + random.choice(letters) + str(random.randint(1, 9))
+            #user.set_password(new_password)
+        #user.save()
+        #message = (f'Ваш новый пароль: {new_password}'
+                   #f' Сохраняйте в тайне!')
+        #print(message)
+        #try:
+            #send_mail(
+                #subject='Новый пароль',
+                #message=message,
+                #from_email=EMAIL_HOST_USER,
+                #recipient_list=[user.email]
+            #)
+        #except:
+            #pass
+        #return redirect('users:login')
+
+
+#class ProfileView(LoginRequiredMixin, UpdateView):
+    #model = User
+    #form_class = UserProfileFrom
+    #success_url = reverse_lazy('users:profile')
+
+    #def get_object(self, queryset=None):
+        #return self.request.user
+
+
+
+from django.shortcuts import render
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
-from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView, ListView, DetailView
-
-from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterFrom, UserProfileFrom
 from users.models import User
 
+from users.forms import UserRegisterForm, UserProfileForm
+from django.urls import reverse_lazy, reverse
 
-class UserLogin(LoginView):
-    template_name = 'users/login.html'
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import CreateView, UpdateView
+
+import random
+import string
+import secrets
+import smtplib
 
 
-class UserLogout(LogoutView):
-    pass
-
-
-class RegisterView(CreateView):
+class UserCreateView(CreateView):
+    """
+    Контроллер отвечает за регистрацию нового пользователя
+    """
     model = User
-    form_class = UserRegisterFrom
-    template_name = 'users/register.html'
-    success_url = reverse_lazy('users:login')
+    form_class = UserRegisterForm
+    success_url = reverse_lazy("users:login")
 
     def form_valid(self, form):
         user = form.save()
+        # Пользователь неактивный, пока не пришло подтверждение почты
         user.is_active = False
-        user.set_password(user.password)
-        verification_code = secrets.token_hex(16)
-        user.verification_code = verification_code
-        host = self.request.get_host()
-        url = f'http://{host}/users/email-confirm/{verification_code}'
-        print(url)
-        send_mail(
-            subject='Подтверждение почты',
-            message=f'Привет, переди по ссылке для подтверждения почты {url}',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[user.email],
-        )
+        # Генерируем токен перед отправкой почтового сообщения новому пользователю
+        token = secrets.token_hex(16)
+        user.token = token
         user.save()
+
+        # Создаем ссылку, по которой должен перейти пользователь
+        # email-confirm/{token} передает управление методу email_verification (см. urls.py)
+        host = self.request.get_host()
+        url = f"http://{host}/users/email-confirm/{token}"
+
+        try:
+            # Отправляем сообщение пользователю
+            print("EMAIL_HOST_USER = ", settings.EMAIL_HOST_USER)
+
+            send_mail(
+                subject="Подтверждение почты",
+                message=f"Привет, перейди по ссылке для подтверждения почты {url}",
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+            print("Письмо успешно отправлено")
+
+        except smtplib.SMTPException as exc:
+            print(f"Ошибка при отправке письма: {str(exc)}")
+
         return super().form_valid(form)
 
 
-def email_verification(request, verification_code):
-    user = get_object_or_404(User, verification_code=verification_code)
-    if user:
-        user.is_active = True
+def email_verification(request, token):
+    """
+    Метод верификации пришедшего почтового подтверждения
+    """
+    user = get_object_or_404(User, token=token)
+    user.is_active = True
+    user.save()
+    return redirect(reverse("users:login"))
+
+
+def reset_password(request):
+    """ Метод восстановления пароля зарегистрированного пользователя
+    на автоматически сгенерированный пароль."""
+
+    if request.method == "POST":
+        email = request.POST.get("email")
+        user = get_object_or_404(User, email=email)
+        characters = string.ascii_letters + string.digits
+        characters_list = list(characters)
+        random.shuffle(characters_list)
+        password = "".join(characters_list[:10])
+        user.set_password(password)
         user.save()
-        return redirect(reverse("users:login"))
-    else:
-        return redirect(reverse('users:register'))
+
+        send_mail(
+            subject="Восстановление пароля",
+            message=f"Ваш новый пароль: {password}",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user.email],
+            fail_silently=False,
+        )
+        context = {
+            "success_message": "Новый пароль был отправлен на адрес вашей электронной почты.",
+        }
+        # print({password})
+        return render(request, "users/reset_password.html", context)
+
+    return render(request, "users/reset_password.html")
 
 
-class ResetPassword(TemplateView):
-    def get(self, request):
-        return render(request, 'users/reset.html')
-
-    def post(self, request):
-        mail = request.POST.get('mail')
-        user = get_object_or_404(User, email=mail)
-        letters = list(string.ascii_lowercase)
-        new_password = ''
-        for i in range(8):
-            new_password = new_password + random.choice(letters) + str(random.randint(1, 9))
-            user.set_password(new_password)
-        user.save()
-        message = (f'Ваш новый пароль: {new_password}'
-                   f' Сохраняйте в тайне!')
-        print(message)
-        try:
-            send_mail(
-                subject='Новый пароль',
-                message=message,
-                from_email=EMAIL_HOST_USER,
-                recipient_list=[user.email]
-            )
-        except:
-            pass
-        return redirect('users:login')
-
-
-class ProfileView(LoginRequiredMixin, UpdateView):
+class ProfileView(UpdateView):
+    """ Контроллер изменения профиля пользователя"""
     model = User
-    form_class = UserProfileFrom
-    success_url = reverse_lazy('users:profile')
+    form_class = UserProfileForm
+    success_url = reverse_lazy("catalog:home")
 
     def get_object(self, queryset=None):
         return self.request.user
