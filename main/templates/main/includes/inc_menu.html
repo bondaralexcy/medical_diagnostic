@@ -19,7 +19,7 @@
             <li><a href="{% url 'main:doctor_list' %}" class="text-primary-emphasis">Наши врачи</a></li>
             <li><a href="{% url 'services:contact_list' %}" class="text-primary-emphasis">Контакты</a></li>
             <li><a href="{% url 'services:feedback_list' %}" class="text-primary-emphasis">Обратная связь</a></li>
-            <li><a href="{% url 'services:site_map_list' %}" class="text-primary-emphasis">Как нас найти</a></li>
+            <li><a href="{% url 'services:about_list' %}" class="text-primary-emphasis">Как нас найти</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'main:patient_list' %}" class="text-primary-emphasis">Пациенты</a></li>
             <li><a href="{% url 'main:appoint_list' %}" class="text-primary-emphasis">Запись на прием</a></li>

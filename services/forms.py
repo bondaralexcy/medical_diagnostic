@@ -1,7 +1,7 @@
 from django.db.models import BooleanField
 from django.forms import ModelForm
 
-from services.models import Service, Contact, Sitemap
+from services.models import Service, Contact
 
 
 class StyleFormMixin:
@@ -32,7 +32,3 @@ class FeedbackForm(StyleFormMixin, ModelForm):
         fields = ('name', 'email', 'phone', 'content')
 
 
-class SitemapForm(StyleFormMixin, ModelForm):
-    class Meta:
-        model = Sitemap
-        fields = ('title', 'content', 'travel_map')

@@ -1,5 +1,4 @@
 {% extends 'main/base.html' %}
-{% load my_tags%}
 {% block content %}
 <main>
     <form method="post" action="" class="form-floating">
@@ -45,7 +44,7 @@
                     </div>
                         <div class="btn-group-vertical">
                         <a href="{% url 'services:contact_list' %}" class="text-black">Контакты</a>
-                        <a href="{% url 'services:site_map_list' %}" class="text-black">Карта сайта</a>
+                        <a href="{% url 'services:about_list' %}" class="text-black">О нас</a>
                         <a href="{% url 'services:feedback_list' %}" class="text-black">Обратная связь</a>
                         </div>
             </div>

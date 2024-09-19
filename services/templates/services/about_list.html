@@ -1,11 +1,7 @@
 {% extends 'main/base.html' %}
-{% load my_tags%}
 {% block content %}
-
-
 <body>
 
-<!--<header style="background-image: url(/media/healthcare-background-svbgqjgz7j1fx9p1.jpg)">-->
     <div class="collapse" id="navbarHeader">
         <div class="container">
             <div class="row">
@@ -26,7 +22,7 @@
                         Заполните форму и мы с Вами свяжемся</h4>
                     <ul class="list-unstyled">
                         <li><a href="{% url 'services:contact_list' %}" class="text-white">Контакты</a></li>
-                        <li><a href="{% url 'services:site_map_list' %}" class="text-white">Карта сайта</a></li>
+                        <li><a href="{% url 'services:about_list' %}" class="text-white">О нас</a></li>
                         <li><a href="{% url 'services:feedback_list' %}" class="text-white">Обратная связь</a></li>
                     </ul>
                 </div>

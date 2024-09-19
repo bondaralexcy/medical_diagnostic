@@ -16,6 +16,9 @@ from main.forms import PatientForm, AppointForm, DoctorForm, PatientModeratorFor
 from main.models import Patient, Appoint, Result, Doctor
 
 
+def index(request):
+    return render(request, "main/index.html")
+
 class PatientListView(ListView):
     """
     Контроллер отвечает за отображение списка пациентов

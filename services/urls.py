@@ -3,7 +3,7 @@ from django.views.decorators.cache import cache_page
 
 from services.apps import ServiceConfig
 from services.views import ServiceCreateView, ServiceDetailView, ServiceUpdateView, ServiceDeleteView, \
-    ContactView, ServiceListView, FeedbackView, SitemapView
+    ContactView, ServiceListView, FeedbackView, AboutView
 
 app_name = ServiceConfig.name
 
@@ -16,5 +16,5 @@ urlpatterns = [
     path('<int:pk>/delete/', ServiceDeleteView.as_view(), name='service_confirm_delete'),
     path('contact/', ContactView.as_view(), name="contact_list"),
     path('feedback/', FeedbackView.as_view(), name="feedback_list"),
-    path('site_map/', SitemapView.as_view(), name="site_map_list"),
+    path('about/', AboutView.as_view(), name="about_list"),
 ]
