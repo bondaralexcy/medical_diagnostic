@@ -5,7 +5,7 @@ from main.apps import MainConfig
 
 from main.views import PatientListView, PatientDetailView, PatientCreateView, PatientUpdateView, PatientDeleteView, \
      AppointListView, AppointCreateView, AppointUpdateView, AppointDeleteView, AppointDetailView, ResultListView, \
-     DoctorListView, DoctorDetailView, DoctorCreateView, DoctorUpdateView, DoctorDeleteView, OurDoctorView
+     DoctorListView, DoctorDetailView, DoctorCreateView, DoctorUpdateView, DoctorDeleteView
 
 app_name = MainConfig.name
 

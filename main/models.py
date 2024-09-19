@@ -27,7 +27,11 @@ class Patient(models.Model):
         verbose_name = "Пациент"
         verbose_name_plural = "Пациенты"
         ordering = ["last_name"]
-
+        permissions = [
+            ("can_edit_email", "Can Edit Patient eMail"),
+            ("can_edit_photo", "Can Edit Patient Photo"),
+            ("can_edit_birthday", "Can Edit Patient Birthday"),
+        ]
 
 class Doctor(models.Model):
     """Модель для хранения информации о врачах"""
@@ -47,7 +51,11 @@ class Doctor(models.Model):
         verbose_name = "Врач"
         verbose_name_plural = "Врачи"
         ordering = ["name", "specialization"]
-
+        permissions = [
+            ("can_edit_name", "Can Edit Doctor Name"),
+            ("can_edit_specialization", "Can Edit Specialization"),
+            ("can_edit_avatar", "Can Edit Doctor Avatar"),
+        ]
 
 class Appoint(models.Model):
     """Модель для хранения информациио записи пациентов на прием"""
@@ -82,11 +90,6 @@ class Appoint(models.Model):
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
         ordering = ["-appoint_date"]
-        permissions = [
-            ("сan_add_appoint", "Can Add Appoint"),
-            ("can_change_appoint", "Can Edit Appoint"),
-            ("can_delete_appoint", "Can Delete Appoint"),
-        ]
 
 
 class Result(models.Model):
@@ -112,7 +115,8 @@ class Result(models.Model):
         verbose_name_plural = "Результаты"
         ordering = ["-date"]
         permissions = [
-            ("can_view_results", "Can View Results"),
+            ("can_edit_test_name", "Can Edit Result Name"),
+            ("can_edit_test_date", "Can Edit Result Date"),
         ]
 
     def __str__(self):

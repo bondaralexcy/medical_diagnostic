@@ -21,6 +21,11 @@ class PatientForm(StyleFormMixin, ModelForm):
         model = Patient
         exclude = ("owner",)
 
+class PatientModeratorForm(StyleFormMixin, ModelForm):
+    """ Специальная форма для модератора сайта"""
+    class Meta:
+        model = Patient
+        fields = ("email", "photo", "birth_date")
 
 class AppointForm(StyleFormMixin, ModelForm):
     class Meta:
