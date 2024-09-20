@@ -1,15 +1,16 @@
 version: '3'
 
 services:
-
   redis:
     image: redis:latest
     restart: on-failure
     expose:
       - "6379"
+    depends_on:
+      - db
 
   db:
-    image: postgres:16-alpine
+    image: postgres:latest
     restart: on-failure
     env_file:
       - .env
@@ -30,8 +31,8 @@ services:
       - "8000:8000"
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+
     volumes:
       - .:/app
     env_file:

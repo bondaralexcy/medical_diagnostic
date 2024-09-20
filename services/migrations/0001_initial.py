@@ -7,36 +7,59 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254, verbose_name='E-mail')),
-                ('phone', models.CharField(max_length=20, verbose_name='Телефон')),
-                ('address', models.CharField(max_length=250, verbose_name='Адрес')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("email", models.EmailField(max_length=254, verbose_name="E-mail")),
+                ("phone", models.CharField(max_length=20, verbose_name="Телефон")),
+                ("address", models.CharField(max_length=250, verbose_name="Адрес")),
             ],
             options={
-                'verbose_name': 'Контакт',
-                'verbose_name_plural': 'Контакты',
-                'ordering': ['phone'],
+                "verbose_name": "Контакт",
+                "verbose_name_plural": "Контакты",
+                "ordering": ["phone"],
             },
         ),
         migrations.CreateModel(
-            name='Service',
+            name="Service",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=250, verbose_name='Услуга')),
-                ('description', models.TextField(max_length=250, verbose_name='Описание')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=8, verbose_name='Цена')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=250, verbose_name="Услуга")),
+                (
+                    "description",
+                    models.TextField(max_length=250, verbose_name="Описание"),
+                ),
+                (
+                    "price",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=8, verbose_name="Цена"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Услуга',
-                'verbose_name_plural': 'Услуги',
-                'ordering': ['name'],
+                "verbose_name": "Услуга",
+                "verbose_name_plural": "Услуги",
+                "ordering": ["name"],
             },
         ),
     ]

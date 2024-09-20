@@ -32,5 +32,5 @@ def initial_letter_filter(text, autoescape=True):
 @register.filter()
 def media_filter(path):
     if path:
-        return f'/media/{path}'
-    return '#'
+        return f"/media/{path}"
+    return "#"

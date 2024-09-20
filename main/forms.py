@@ -4,16 +4,18 @@ from main.models import Patient, Appoint, Doctor, Result
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+
 class StyleFormMixin:
-    """ Стилизация форм """
+    """Стилизация форм"""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             # Добавляем чек-боксы для логических полей
             if isinstance(field, BooleanField):
-                field.widget.attrs['class'] = 'form-check-input'
+                field.widget.attrs["class"] = "form-check-input"
             else:
-                field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs["class"] = "form-control"
 
 
 class PatientForm(StyleFormMixin, ModelForm):
@@ -21,11 +23,14 @@ class PatientForm(StyleFormMixin, ModelForm):
         model = Patient
         exclude = ("owner",)
 
+
 class PatientModeratorForm(StyleFormMixin, ModelForm):
-    """ Специальная форма для модератора сайта"""
+    """Специальная форма для модератора сайта"""
+
     class Meta:
         model = Patient
         fields = ("email", "photo", "birth_date")
+
 
 class AppointForm(StyleFormMixin, ModelForm):
     class Meta:
@@ -33,7 +38,7 @@ class AppointForm(StyleFormMixin, ModelForm):
         fields = ("patient", "doctor", "appoint_date")
 
     def clean_appoint_date(self):
-        """ Проверка даты. Почему-то не работает"""
+        """Проверка даты. Почему-то не работает"""
         app_date = self.cleaned_data["appoint_date"]
         # current_date = timezone.now()
         # timedelta = int(app_date.day - current_date.day)
@@ -43,10 +48,12 @@ class AppointForm(StyleFormMixin, ModelForm):
 
         return app_date
 
+
 class DoctorForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Doctor
-        fields = '__all__'
+        fields = "__all__"
+
 
 class ResultForm(StyleFormMixin, ModelForm):
     class Meta:

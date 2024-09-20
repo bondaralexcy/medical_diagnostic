@@ -2,10 +2,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-
 class User(AbstractUser):
-    """ Добавил модель для пользователя.
-        Задал электронную почту как поле для авторизации."""    
+    """Добавил модель для пользователя.
+    Задал электронную почту как поле для авторизации."""
+
     username = None
     email = models.EmailField(
         unique=True, verbose_name="Email", help_text="Укажите eMail"
@@ -31,7 +31,12 @@ class User(AbstractUser):
         verbose_name="Город",
         help_text="Введите свой город",
     )
-    token = models.CharField(max_length=100,verbose_name="Token", blank=True, null=True,)
+    token = models.CharField(
+        max_length=100,
+        verbose_name="Token",
+        blank=True,
+        null=True,
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

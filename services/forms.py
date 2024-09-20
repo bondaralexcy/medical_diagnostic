@@ -9,26 +9,24 @@ class StyleFormMixin:
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if isinstance(field, BooleanField):
-                field.widget.attrs['class'] = 'form-check-input'
+                field.widget.attrs["class"] = "form-check-input"
             else:
-                field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs["class"] = "form-control"
 
 
 class ServiceForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Service
-        fields = ('name', 'description', 'price')
+        fields = ("name", "description", "price")
 
 
 class ContactForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Contact
-        fields = ('email', 'phone', 'address')
+        fields = ("email", "phone", "address")
 
 
 class FeedbackForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Contact
-        fields = ('name', 'email', 'phone', 'content')
-
-
+        fields = ("name", "email", "phone", "content")

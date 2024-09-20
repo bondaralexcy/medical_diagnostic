@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-#from django.forms import BooleanField
+
+# from django.forms import BooleanField
 
 from users.models import User
 
@@ -14,21 +15,22 @@ class StyleFormMixin:
                 field.widget.attrs["class"] = "form-control"
 
 
-
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
-    """ Регистрация нового пользователя """
+    """Регистрация нового пользователя"""
+
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2')
+        fields = ("email", "password1", "password2")
 
 
 class UserProfileForm(StyleFormMixin, UserChangeForm):
-    """ Изменение пользователя """
+    """Изменение пользователя"""
+
     class Meta:
         model = User
-        fields = ('email', 'phone', 'avatar', 'city')
+        fields = ("email", "phone", "avatar", "city")
 
     def __init__(self, *args, **kwargs):
-        """ Подавление вывода предупреждения о пароле"""
+        """Подавление вывода предупреждения о пароле"""
         super().__init__(*args, **kwargs)
-        self.fields['password'].widget = forms.HiddenInput()
+        self.fields["password"].widget = forms.HiddenInput()
