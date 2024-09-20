@@ -296,9 +296,9 @@ class DoctorListView(ListView):
     fields = ["name", "specialization", "qualification"]
     permission_required = "main.view_doctor"
 
-    def get_queryset(self):
-        # Получим список врачей из кэша
-        return get_doctor_from_cache()
+    # def get_queryset(self):
+    #     # Получим список врачей из кэша
+    #     return get_doctor_from_cache()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
