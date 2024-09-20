@@ -10,10 +10,10 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=100, verbose_name="Имя",)
     surname = models.CharField(max_length=100, verbose_name="Отчество", **NULLABLE,)
     last_name = models.CharField(max_length=100, verbose_name="Фамилия",)
-    phone = models.CharField(max_length=20, verbose_name="Телефон",)
-    address = models.CharField(max_length=200, verbose_name="Адрес",)
-    email = models.EmailField(verbose_name="Почта",)
-    birth_date = models.DateField(verbose_name="Дата рождения",)
+    phone = models.CharField(max_length=20, verbose_name="Телефон", **NULLABLE,)
+    address = models.CharField(max_length=200, verbose_name="Адрес", **NULLABLE,)
+    email = models.EmailField(verbose_name="Почта", **NULLABLE,)
+    birth_date = models.DateField(verbose_name="Дата рождения", **NULLABLE,)
     photo = models.ImageField(upload_to="patient/", **NULLABLE,)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан",)
     owner = models.ForeignKey(
@@ -38,14 +38,14 @@ class Doctor(models.Model):
 
     name = models.CharField(max_length=100, verbose_name="ФИО врача",)
     specialization = models.CharField(max_length=500, verbose_name="Специализация",)
-    qualification = models.CharField(max_length=500, verbose_name="Квалификация",)
-    experience = models.PositiveIntegerField(verbose_name="Стаж",)
+    qualification = models.CharField(max_length=500, verbose_name="Квалификация", **NULLABLE,)
+    experience = models.PositiveIntegerField(verbose_name="Стаж", **NULLABLE,)
     education = models.TextField(verbose_name="Образование", **NULLABLE,)
     avatar = models.ImageField(upload_to="doctor/", **NULLABLE,)
     comment = models.TextField(verbose_name="Комментарии", **NULLABLE,)
 
     def __str__(self):
-        return f"{self.name} {self.specialization}"
+        return f"{self.name}"
 
     class Meta:
         verbose_name = "Врач"
@@ -94,6 +94,7 @@ class Appoint(models.Model):
 
 class Result(models.Model):
     """Модель для хранения результатов обследования"""
+    # patient, date, medical_test, test_result, units_of_measurement, reference_value
 
     patient = models.ForeignKey(
         Patient, on_delete=models.CASCADE, verbose_name="Пациент",

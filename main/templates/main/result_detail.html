@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load my_tags%}
+{% block content %}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="col-6">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <p class="card-text">{{object.medical_test}}</p>
+
+                <p class="card-text">Дата: {{object.date}}</p>
+                <p class="card-text">Результат: {{object.test_result}}</p>
+                <p class="card-text">Ед. измерения: {{object.units_of_measurement}}</p>
+                <p class="card-text">Референсное значение: {{object.reference_value}}</p>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:appoint_list' %}" role="button">Назначения</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:result_list' %}" role="button">Вернуться</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:result_confirm_delete' object.pk %}" role="button">Удалить</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

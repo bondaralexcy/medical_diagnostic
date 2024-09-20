@@ -2,29 +2,13 @@ from django.urls import reverse_lazy
 
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from services.models import Service, Contact, Sitemap
+from services.models import Service, Contact
 
 
 class ServiceListView(ListView):
     model = Service
     fields = ['id', 'name', 'description', 'price']
-    # template_name = 'services/service_list.html'
-    # paginate_by = 10
-    # permission_required = 'services.view_service'
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['title'] = 'Все услуги'
-    #     # print(f"context = {context['name']}")
-    #     return context
-
-    # def get_template_names(self):
-    #     # print(f"request.path: {self.request.path}")
-    #
-    #     if self.request.path == '/services/':
-    #         return ['services/service_list.html']
-    #     elif self.request.path == '/services/main/':
-    #         return ['services/service_main.html']
 
 
 class ServiceCreateView(CreateView):
@@ -37,7 +21,7 @@ class ServiceCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['name'] = 'Создание услуги'
-        print(f"request.path: {self.request.path}")
+        # print(f"request.path: {self.request.path}")
         return context
 
     def form_valid(self, form):
@@ -98,7 +82,7 @@ class FeedbackView(ListView):
     template_name = 'services/feedback_list.html'
 
 
-class SitemapView(ListView):
-    model = Sitemap
+class AboutView(ListView):
+    model = Contact
     fields = '__all__'
-    template_name = 'services/site_map_list.html'
+    template_name = 'services/about_list.html'

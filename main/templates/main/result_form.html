@@ -4,7 +4,7 @@
     {% if object %}
         <h1 class="display-6">{{ title }}</h1>
     {% else %}
-        <h1 class="display-6">Запись на обследование</h1>
+        <h1 class="display-6">Результаты обследования</h1>
     {% endif %}
 </div>
 <main>
@@ -13,19 +13,23 @@
           <form class="row" method="post" enctype="multipart/form-data">
                 <div class="col-6">
                     <div class="card">
+                        {% if object %}
+                            <p class="card-text">Редактирование результатов обследования</p>
+                        {% else %}
+                            <p class="card-text">Добавить результатов обследования</p>
+                        {% endif %}
 
-                        <p class="card-text"> </p>
                         <div class="card-body">
                                 {% csrf_token %}
                                 {{ form.as_p }} {# выводим форму как параграф #}
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                <button type="submit" class="btn btn-outline-primary">
                                     {% if object %}
                                         Изменить
                                     {% else %}
                                         Сохранить
                                     {% endif %}
                                 </button>
-                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:appoint_list' %}" role="button">Отмена</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'main:patient_list' %}" role="button">Отмена</a>
                         </div>
                     </div>
                 </div>

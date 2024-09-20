@@ -36,15 +36,3 @@ class Contact(models.Model):
         ordering = ['phone']
 
 
-class Sitemap(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Заголовок')
-    content = models.TextField(verbose_name='Описание')
-    travel_map = models.URLField(verbose_name='URL')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Карта сайта'
-        verbose_name_plural = 'Карты сайта'
-
