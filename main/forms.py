@@ -1,6 +1,6 @@
 from django.db.models import BooleanField
 from django.forms import ModelForm
-from main.models import Patient, Appoint, Doctor
+from main.models import Patient, Appoint, Doctor, Result
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
@@ -48,3 +48,7 @@ class DoctorForm(StyleFormMixin, ModelForm):
         model = Doctor
         fields = '__all__'
 
+class ResultForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Result
+        exclude = ("date",)

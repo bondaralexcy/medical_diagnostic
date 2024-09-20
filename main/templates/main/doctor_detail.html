@@ -2,7 +2,6 @@
 {% load my_tags%}
 {% block content %}
 
-
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -19,8 +18,9 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a class="btn btn-outline-secondary" href="{% url 'main:doctor_list' %}" role="button">Вернуться</a>
-                    <a class="btn btn-outline-secondary" href="{% url 'main:doctor_confirm_delete' object.pk %}" role="button">Удалить</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:appoint_list' %}" role="button">Пациенты</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:doctor_list' %}" role="button">Вернуться</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:doctor_confirm_delete' object.pk %}" role="button">Удалить</a>
                   </div>
                 </div>
               </div>

@@ -15,10 +15,10 @@
                                         <form method="post" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <p> Хотите удалить запись? </p>
-                                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Подтвердить</button>
-
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">Подтвердить</button>
+                                            <a href="{% url 'main:appoint_list' %}" class="btn btn-sm btn-outline-primary">Отмена</a>
                                         </form>
-                                        <a href="{% url 'health:record_list' %}" class="btn btn-lg btn-block btn-outline-primary">Отмена</a>
+
 
                                     </div>
                                 </div>

@@ -3,10 +3,10 @@ from django.urls import path, include
 
 from main.apps import MainConfig
 
-from main.views import PatientListView, PatientDetailView, PatientCreateView, PatientUpdateView, PatientDeleteView, \
-     AppointListView, AppointCreateView, AppointUpdateView, AppointDeleteView, AppointDetailView, ResultListView, \
-     DoctorListView, DoctorDetailView, DoctorCreateView, DoctorUpdateView, DoctorDeleteView
-
+from main.views import PatientListView, PatientDetailView, PatientCreateView, PatientUpdateView, PatientDeleteView
+from main.views import AppointListView, AppointCreateView, AppointUpdateView, AppointDeleteView, AppointDetailView
+from main.views import DoctorListView, DoctorDetailView, DoctorCreateView, DoctorUpdateView, DoctorDeleteView
+from main.views import ResultListView, ResultDetailView, ResultCreateView, ResultUpdateView, ResultDeleteView
 app_name = MainConfig.name
 
 urlpatterns = [
@@ -29,5 +29,9 @@ urlpatterns = [
      path('doctor/<int:pk>/delete/', DoctorDeleteView.as_view(), name='doctor_confirm_delete'),
 
      path('result/', ResultListView.as_view(), name='result_list'),
+     path('result/<int:pk>/', ResultDetailView.as_view(), name='result_detail'),
+     path('result/create/', ResultCreateView.as_view(), name='result_create'),
+     path('result/<int:pk>/update/', ResultUpdateView.as_view(), name='result_update'),
+     path('result/<int:pk>/delete/', ResultDeleteView.as_view(), name='result_confirm_delete'),
 ]
 
