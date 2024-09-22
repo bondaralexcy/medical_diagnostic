@@ -20,7 +20,7 @@
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:patient_detail' patient.pk %}" role="button">Посмотреть</a>
                     {% if perms.main.can_edit_email and perms.main.can_edit_photo and perms.main.can_edit_birthday or user == patient.owner%}
                         <a class="btn btn-sm btn-outline-secondary" href="{% url 'main:patient_update' patient.pk %}" role="button">Изменить</a>
-                        <a class="btn btn-sm btn-outline-warning" href="{% url 'main:patient_confirm_delete' patient.pk %}" role="button">Удалить</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{% url 'main:patient_confirm_delete' patient.pk %}" role="button">Удалить</a>
                     {% endif %}
                 </div>
               </div>

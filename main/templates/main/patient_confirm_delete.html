@@ -15,9 +15,9 @@
                                         <form method="post" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <p> Хотите удалить информацию о пациенте {{ object.last_name }}? </p>
-                                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Подтвердить</button>
+                                            <button type="submit" class="btn btn-sm btn-block btn-outline-primary">Подтвердить</button>
+                                            <a href="{% url 'main:patient_list' %}" class="btn btn-sm btn-block btn-outline-secondary">Отмена</a>
                                         </form>
-                                        <a href="{% url 'main:patient_list' %}" class="btn btn-lg btn-block btn-outline-primary">Отмена</a>
                                     </div>
                                 </div>
                             </div>

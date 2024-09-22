@@ -32,12 +32,11 @@
                                 <div class="card-body">
                                     <form method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
-                                        <p> Хотите удалить данные по врачу? </p>
-                                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
+                                        <p> Хотите удалить данные врача {{ object.name}} ?</p>
+                                        <button type="submit" class="btn btn-sm btn-block btn-outline-primary">
                                             Подтвердить</button>
-                                        </form>
                                         <a href="{% url 'main:doctor_list' %}"
-                                           class="btn btn-lg btn-block btn-outline-primary">Отмена</a>
+                                           class="btn btn-sm btn-block btn-outline-secondary">Отмена</a>
                                     </form>
                                 </div>
                             </div>
