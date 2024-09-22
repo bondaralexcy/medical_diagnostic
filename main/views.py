@@ -80,7 +80,6 @@ class PatientUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Patient
     form_class = PatientForm
-    success_url = reverse_lazy("main:patient_list")
 
     def get_success_url(self):
         return reverse("main:patient_detail", args=[self.kwargs.get("pk")])
@@ -185,7 +184,7 @@ class AppointListView(LoginRequiredMixin, ListView):
     model = Appoint
     fields = ["patient", "doctor"]
     success_url = reverse_lazy("main:appoint_list")
-    permission_required = "main.view_appoint"
+    # permission_required = "main.view_appoint"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -201,24 +200,25 @@ class AppointListView(LoginRequiredMixin, ListView):
         return queryset
 
 
+
+
 class AppointCreateView(LoginRequiredMixin, CreateView):
     """
-    Контроллер отвечает за создание записей пациентов
+    Контроллер отвечает за создание записи к врачу
+
+    Стандартное название шаблона:
+    <app_name>/<model_name>_form.html
     """
 
     model = Appoint
     form_class = AppointForm
-    fields = ["patient", "doctor", "appoint_date"]
     success_url = reverse_lazy("main:appoint_list")
-    permission_required = "main.add_appoint"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = f"Новая запись для пациента"
         return context
 
-    def get_queryset(self):
-        return Appoint.objects.all()
 
 
 class AppointDetailView(LoginRequiredMixin, DetailView):
@@ -245,11 +245,9 @@ class AppointUpdateView(LoginRequiredMixin, UpdateView):
     """
     Контроллер отвечает за внесение изменений в записеи пациентов
     """
-
     model = Appoint
-    fields = ["appoint_date", "doctor"]
     form_class = AppointForm
-    permission_required = "main.change_appoint"
+
 
     def get_success_url(self):
         return reverse("main:appoint_detail", args=[self.kwargs.get("pk")])
