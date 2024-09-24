@@ -81,11 +81,4 @@ class ContactsPageViews(CreateView):
     template_name = "services/contact.html"
     extra_context = {"title": "Сохранить контакт"}
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     number = len(Contact.objects.all())
-    #     if number > 5:
-    #         context["latest_contacts"] = Contact.objects.all()[number - 5 : number + 1]
-    #     else:
-    #         context["latest_contacts"] = Contact.objects.all()
-    #     return context
+
