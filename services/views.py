@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from services.models import Service, Contact, About
-from services.forms import ServiceForm, ContactForm
+from services.forms import ServiceForm
 
 class ServiceListView(ListView):
     model = Service
@@ -77,15 +77,15 @@ class ContactsPageViews(CreateView):
         "phone",
         "message",
     )
-    success_url = reverse_lazy("services:contact_form")
+    success_url = reverse_lazy("services:contact")
     template_name = "services/contact.html"
     extra_context = {"title": "Сохранить контакт"}
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        number = len(Contact.objects.all())
-        if number > 5:
-            context["latest_contacts"] = Contact.objects.all()[number - 5 : number + 1]
-        else:
-            context["latest_contacts"] = Contact.objects.all()
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     number = len(Contact.objects.all())
+    #     if number > 5:
+    #         context["latest_contacts"] = Contact.objects.all()[number - 5 : number + 1]
+    #     else:
+    #         context["latest_contacts"] = Contact.objects.all()
+    #     return context

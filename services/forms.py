@@ -20,8 +20,8 @@ class ServiceForm(StyleFormMixin, ModelForm):
         fields = ("service_name", "description", "price")
 
 
-class ContactForm(StyleFormMixin, ModelForm):
-    class Meta:
-        model = Contact
-        fields = "__all__"
+# class ContactForm(StyleFormMixin, ModelForm):
+#     class Meta:
+#         model = Contact
+#         fields = "__all__"
 

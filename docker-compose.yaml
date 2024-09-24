@@ -1,13 +1,6 @@
 version: '3'
 
 services:
-  redis:
-    image: redis:latest
-    restart: on-failure
-    expose:
-      - "6379"
-    depends_on:
-      - db
 
   db:
     image: postgres:latest
