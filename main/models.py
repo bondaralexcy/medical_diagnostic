@@ -156,8 +156,6 @@ class Appoint(models.Model):
 class Result(models.Model):
     """Модель для хранения результатов обследования"""
 
-    # patient, date, medical_test, test_result, units_of_measurement, reference_value
-
     patient = models.ForeignKey(
         Patient,
         on_delete=models.CASCADE,

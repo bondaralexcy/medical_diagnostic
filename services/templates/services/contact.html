@@ -1,0 +1,43 @@
+<!--  Подключаем базовый шаблон-->
+{% extends 'main/base.html' %}
+{% block content %} {# Форма для обратной связи с клиентами #}
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <p class="card-text">
+                  Головной офис<br>
+                  Москва, ул. Красная Пресня, д.16<br>
+                  Телефон: +7 (495) 032-64-60
+                </p>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+             <div class="card-body">
+                <h2>Напишите нам</h2>
+                <form method="post">
+                  {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="name">Имя</label>
+                        <input type="text" name="name"  id="name" placeholder="  Ваше имя" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone">Телефон</label>
+                        <input type="text" name="phone"  id="phone" placeholder="  № телефона" required>
+                    </div>
+
+                    <textarea class="form-control mb-2" name="message" placeholder="Сообщение"></textarea>
+
+                  <button type="submit" class="btn btn-sm btn-secondary form-control">Отправить</button>
+                </form>
+             </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

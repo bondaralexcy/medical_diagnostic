@@ -4,9 +4,9 @@ NULLABLE = {"blank": True, "null": True}
 
 
 class Service(models.Model):
-    service_name = models.CharField(max_length=250, verbose_name="Услуга")
-    description = models.TextField(max_length=250, verbose_name="Описание")
-    price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Цена")
+    service_name = models.CharField(max_length=250, verbose_name="Услуга",)
+    description = models.TextField(verbose_name="Описание",)
+    price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Цена",)
 
     def __str__(self):
         return self.service_name
@@ -23,14 +23,39 @@ class Service(models.Model):
 
 
 class Contact(models.Model):
-    email = models.EmailField(verbose_name="E-mail")
-    phone = models.CharField(max_length=20, verbose_name="Телефон")
-    address = models.CharField(max_length=250, verbose_name="Адрес")
+    """
+    Модель для хранения информации о контактах
+    """
+
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Имя",
+    )
+    phone = models.CharField(
+        max_length=50,
+        verbose_name="Телефон",
+        **NULLABLE,
+    )
+    message = models.TextField(
+        verbose_name="Сообщение",
+        **NULLABLE,
+    )
 
     def __str__(self):
-        return f"{self.phone} {self.address} {self.email}"
+        return self.name
 
     class Meta:
         verbose_name = "Контакт"
         verbose_name_plural = "Контакты"
-        ordering = ["phone"]
+
+
+
+class About(models.Model):
+    description = models.TextField(verbose_name="Описание", **NULLABLE,)
+
+    def __str__(self):
+        return self.description
+
+    class Meta:
+        verbose_name = "Презентация"
+        verbose_name_plural = "Презентации"

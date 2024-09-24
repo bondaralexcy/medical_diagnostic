@@ -1,7 +1,4 @@
 from django.urls import path, include
-
-# from django.views.decorators.cache import cache_page
-
 from main.apps import MainConfig
 
 from main.views import (

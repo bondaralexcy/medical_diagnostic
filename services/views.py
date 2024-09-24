@@ -1,9 +1,7 @@
 from django.urls import reverse_lazy
-
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-
-from services.models import Service, Contact
-
+from services.models import Service, Contact, About
+from services.forms import ServiceForm, ContactForm
 
 class ServiceListView(ListView):
     model = Service
@@ -13,14 +11,12 @@ class ServiceListView(ListView):
 class ServiceCreateView(CreateView):
     model = Service
     fields = "__all__"
-    template_name = "services/service_form.html"
+    form_class = ServiceForm
     success_url = reverse_lazy("services:service_list")
-    permission_required = "services.add_service"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["name"] = "Создание услуги"
-        # print(f"request.path: {self.request.path}")
         return context
 
     def form_valid(self, form):
@@ -29,8 +25,7 @@ class ServiceCreateView(CreateView):
 
 class ServiceDetailView(DeleteView):
     model = Service
-    template_name = "services/service_detail.html"
-    success_url = reverse_lazy("services:service_list")
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,10 +39,10 @@ class ServiceDetailView(DeleteView):
 
 class ServiceUpdateView(UpdateView):
     model = Service
+    form_class = ServiceForm
     fields = "__all__"
-    template_name = "services/service_form.html"
     success_url = reverse_lazy("services:service_list")
-    permission_required = "services.change_service"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,23 +59,33 @@ class ServiceUpdateView(UpdateView):
 
 class ServiceDeleteView(DeleteView):
     model = Service
-    template_name = "services/service_confirm_delete.html"
     success_url = reverse_lazy("services:service_list")
 
 
-class ContactView(ListView):
-    model = Contact
+
+class AboutListView(ListView):
+    model = About
     fields = "__all__"
-    template_name = "services/contact_list.html"
 
 
-class FeedbackView(ListView):
+class ContactsPageViews(CreateView):
+    """Сохранить информацию о контакте"""
+
     model = Contact
-    fields = "__all__"
-    template_name = "services/feedback_list.html"
+    fields = (
+        "name",
+        "phone",
+        "message",
+    )
+    success_url = reverse_lazy("services:contact_form")
+    template_name = "services/contact.html"
+    extra_context = {"title": "Сохранить контакт"}
 
-
-class AboutView(ListView):
-    model = Contact
-    fields = "__all__"
-    template_name = "services/about_list.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        number = len(Contact.objects.all())
+        if number > 5:
+            context["latest_contacts"] = Contact.objects.all()[number - 5 : number + 1]
+        else:
+            context["latest_contacts"] = Contact.objects.all()
+        return context

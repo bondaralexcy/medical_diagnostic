@@ -20,26 +20,18 @@ from main.forms import (
     ResultForm,
 )
 from main.models import Patient, Appoint, Result, Doctor
-from main.services import get_doctor_from_cache
-
-
-def index(request):
-    return render(request, "main/index.html")
 
 
 class PatientListView(ListView):
     """
     Контроллер отвечает за отображение списка пациентов
-
     Стандартное название шаблона:
     <app_name>/<model_name>_<action>.html
     в нашем случае:
     main/patient_list.html
-
     Создается стандартный контент, который передается в шаблон:
     context = {"object_list: patients}
     """
-
     model = Patient
 
 
@@ -47,10 +39,11 @@ class PatientDetailView(DetailView):
     """
     Контроллер отвечает за отображение детальной информации о пациенте
     """
-
     model = Patient
 
+
     def get_context_data(self, **kwargs):
+        """ Передача дополнительного контента в шаблон"""
         context = super().get_context_data(**kwargs)
         patient_item = self.get_object()
         context["title"] = patient_item.last_name
@@ -60,11 +53,9 @@ class PatientDetailView(DetailView):
 class PatientCreateView(LoginRequiredMixin, CreateView):
     """
     Контроллер отвечает за создание записи о пациенте
-
     Стандартное название шаблона:
     <app_name>/<model_name>_form.html
     """
-
     model = Patient
     form_class = PatientForm
     success_url = reverse_lazy("main:patient_list")
@@ -73,11 +64,9 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
 class PatientUpdateView(LoginRequiredMixin, UpdateView):
     """
     Контроллер отвечает за изменение сведений о пациенте
-
     Стандартное название шаблона:
     <app_name>/<model_name>_form.html
     """
-
     model = Patient
     form_class = PatientForm
 
@@ -87,8 +76,7 @@ class PatientUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Модифицируем метод get_context_data
         для передачи в форму переменной 'title'
-        и создания формсета PatientFormset для записи пациента к врачам
-        """
+        и создания формсета PatientFormset для записи пациента к врачам """
 
         # Заполняем словарь context_data
         context_data = super().get_context_data(**kwargs)
@@ -101,7 +89,7 @@ class PatientUpdateView(LoginRequiredMixin, UpdateView):
             + " "
             + patient_item.surname
         )
-        # Создаем формсет для записей к врачам
+        # Создаем формсет для записей на прием к врачам
         PatientFormset = inlineformset_factory(Patient, Appoint, AppointForm, extra=3)
         if self.request.method == "POST":
             # В случае, если обновляем данные
@@ -154,14 +142,12 @@ class PatientUpdateView(LoginRequiredMixin, UpdateView):
 class PatientDeleteView(LoginRequiredMixin, DeleteView):
     """
     Контроллер отвечает за удаление информации о пациенте
-
     Стандартное название шаблона:
     <app_name>/<model_name>_confirm_delete.html
     """
-
     model = Patient
     success_url = reverse_lazy("main:patient_list")
-    permission_required = "main.delete_patient"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -180,11 +166,9 @@ class AppointListView(LoginRequiredMixin, ListView):
     """
     Контроллер отвечает за отображение записей пациентов
     """
-
     model = Appoint
     fields = ["patient", "doctor"]
-    success_url = reverse_lazy("main:appoint_list")
-    # permission_required = "main.view_appoint"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -200,19 +184,16 @@ class AppointListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-
-
 class AppointCreateView(LoginRequiredMixin, CreateView):
     """
     Контроллер отвечает за создание записи к врачу
-
     Стандартное название шаблона:
-    <app_name>/<model_name>_form.html
-    """
+    <app_name>/<model_name>_form.html """
 
     model = Appoint
     form_class = AppointForm
     success_url = reverse_lazy("main:appoint_list")
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -220,12 +201,10 @@ class AppointCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-
 class AppointDetailView(LoginRequiredMixin, DetailView):
     """
     Контроллер отвечает за отображение детальной информации о записи пациента
     """
-
     model = Appoint
     success_url = reverse_lazy("main:appoint_list")
 
@@ -265,10 +244,9 @@ class AppointDeleteView(LoginRequiredMixin, DeleteView):
     """
     Контроллер отвечает за удаление записей пациентов
     """
-
     model = Appoint
     success_url = reverse_lazy("main:appoint_list")
-    permission_required = "main.delete_appoint"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -287,55 +265,41 @@ class DoctorListView(ListView):
     в нашем случае:
     main/doctor_list.html
     """
-
     model = Doctor
     # Оганичим перечень отображаемых полей
     # Остальные в DetailView
     fields = ["name", "specialization", "qualification"]
-    permission_required = "main.view_doctor"
 
-    # def get_queryset(self):
-    #     # Получим список врачей из кэша
-    #     return get_doctor_from_cache()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
-    success_url = reverse_lazy("main:doctor_list")
-
 
 class DoctorCreateView(LoginRequiredMixin, CreateView):
     """
     Контроллер отвечает за внесение информации о врачах
-
     """
-
     model = Doctor
     form_class = DoctorForm
     success_url = reverse_lazy("main:doctor_list")
-    permission_required = "main.add_doctor"
 
 
 class DoctorDetailView(DetailView):
     """
     Контроллер отвечает за отображение детальной информации о враче
     """
-
     model = Doctor
 
 
 class DoctorUpdateView(LoginRequiredMixin, UpdateView):
     """
     Контроллер отвечает за изменение сведений о враче
-
     Стандартное название шаблона:
-    <app_name>/<model_name>_form.html
-    """
-
+    <app_name>/<model_name>_form.html """
     model = Doctor
     form_class = DoctorForm
-    permission_required = "main.change_doctor"
+
 
     def get_success_url(self):
         """Определяем переход при удачном завершении"""
@@ -348,20 +312,17 @@ class DoctorDeleteView(LoginRequiredMixin, DeleteView):
     Стандартное название шаблона:
     <app_name>/<model_name>_confirm_delete.html
     """
-
     model = Doctor
     success_url = reverse_lazy("main:doctor_list")
-    permission_required = "main.delete_doctor"
+
 
 
 class ResultListView(LoginRequiredMixin, ListView):
     """
     Контроллер отвечает за отображение результатов обследования
     """
-
     model = Result
-    success_url = reverse_lazy("services:service_list")
-    permission_required = "main.view_result"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -373,7 +334,6 @@ class ResultCreateView(LoginRequiredMixin, CreateView):
     """
     Контроллер, который отвечает за создание результата
     """
-
     model = Result
     form_class = ResultForm
     success_url = reverse_lazy("main:result_list")
@@ -383,10 +343,12 @@ class ResultUpdateView(LoginRequiredMixin, UpdateView):
     """
     Контроллер, который отвечает за редактирование результата
     """
-
     model = Result
     form_class = ResultForm
-    success_url = reverse_lazy("main:result_list")
+
+    def get_success_url(self):
+        """Определяем переход при удачном завершении"""
+        return reverse("main:result_detail", args=[self.kwargs.get("pk")])
 
 
 class ResultDeleteView(LoginRequiredMixin, DeleteView):
@@ -403,5 +365,4 @@ class ResultDetailView(LoginRequiredMixin, DetailView):
     Контроллер отвечает за отображение детальной информации
     о результатах обследования
     """
-
     model = Result

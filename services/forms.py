@@ -17,16 +17,11 @@ class StyleFormMixin:
 class ServiceForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Service
-        fields = ("name", "description", "price")
+        fields = ("service_name", "description", "price")
 
 
 class ContactForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Contact
-        fields = ("email", "phone", "address")
+        fields = "__all__"
 
-
-class FeedbackForm(StyleFormMixin, ModelForm):
-    class Meta:
-        model = Contact
-        fields = ("name", "email", "phone", "content")
