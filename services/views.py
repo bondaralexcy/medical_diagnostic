@@ -1,5 +1,12 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    TemplateView,
+)
 from services.models import Service, Contact, About
 from services.forms import ServiceForm
 
@@ -23,7 +30,7 @@ class ServiceCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ServiceDetailView(DeleteView):
+class ServiceDetailView(DetailView):
     model = Service
 
 
@@ -40,7 +47,7 @@ class ServiceDetailView(DeleteView):
 class ServiceUpdateView(UpdateView):
     model = Service
     form_class = ServiceForm
-    fields = "__all__"
+    # fields = "__all__"
     success_url = reverse_lazy("services:service_list")
 
 

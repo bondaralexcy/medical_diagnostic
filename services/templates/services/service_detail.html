@@ -13,11 +13,10 @@
                 <p class="card-text">{{object.description}} </p>
                 <p class="card-text">Стоимость: {{object.price}}</p>
 
-
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a class="btn btn-outline-secondary" href="{% url 'services:service_list' %}" role="button">Вернуться</a>
-                    <a class="btn btn-outline-secondary" href="{% url 'services:service_confirm_delete' object.pk %}" role="button">Удалить</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'services:service_list' %}" role="button">Вернуться</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'services:service_confirm_delete' object.pk %}" role="button">Удалить</a>
                   </div>
                 </div>
               </div>

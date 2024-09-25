@@ -36,25 +36,13 @@ urlpatterns = [
     path("", PatientListView.as_view(), name="patient_list"),
     path("patient/<int:pk>/", PatientDetailView.as_view(), name="patient_detail"),
     path("patient/create/", PatientCreateView.as_view(), name="patient_create"),
-    path(
-        "patient/<int:pk>/update/", PatientUpdateView.as_view(), name="patient_update"
-    ),
-    path(
-        "patient/<int:pk>/delete/",
-        PatientDeleteView.as_view(),
-        name="patient_confirm_delete",
-    ),
+    path("patient/<int:pk>/update/", PatientUpdateView.as_view(), name="patient_update"),
+    path("patient/<int:pk>/delete/", PatientDeleteView.as_view(),name="patient_confirm_delete",),
     path("appoint/", AppointListView.as_view(), name="appoint_list"),
     path("appoint/<int:pk>", AppointDetailView.as_view(), name="appoint_detail"),
     path("appoint/create/", AppointCreateView.as_view(), name="appoint_form"),
-    path(
-        "appoint/<int:pk>/update/", AppointUpdateView.as_view(), name="appoint_update"
-    ),
-    path(
-        "appoint/<int:pk>/delete/",
-        AppointDeleteView.as_view(),
-        name="appoint_confirm_delete",
-    ),
+    path("appoint/<int:pk>/update/", AppointUpdateView.as_view(), name="appoint_update"),
+    path("appoint/<int:pk>/delete/", AppointDeleteView.as_view(), name="appoint_confirm_delete"),
     path("doctor/", DoctorListView.as_view(), name="doctor_list"),
     path("doctor/<int:pk>/", DoctorDetailView.as_view(), name="doctor_detail"),
     path("doctor/create/", DoctorCreateView.as_view(), name="doctor_create"),

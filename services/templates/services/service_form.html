@@ -16,10 +16,11 @@
                                         {% csrf_token %}
                                         {{ form.as_p }}
                                         {% if object %}
-                                        <button type="submit" class="btn btn-primary">Изменить</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">Изменить</button>
                                         {% else %}
-                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">Сохранить</button>
                                         {% endif %}
+                                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'services:service_list' %}" role="button">Вернуться</a>
                                     </form>
                                 </div>
                             </div>
